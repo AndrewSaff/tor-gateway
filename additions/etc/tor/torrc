@@ -1,0 +1,56 @@
+ControlSocket /run/tor/control
+CookieAuthentication 1
+CookieAuthFile /run/tor/control.authcookie
+
+Log notice stdout
+
+AvoidDiskWrites 1
+
+ExitRelay 0
+IPv6Exit 0
+ExitPolicy reject *:*
+
+ExcludeExitNodes {RU},{UA},{BY}
+StrictNodes 1
+
+AutomapHostsOnResolve 1
+VirtualAddrNetworkIPv4 10.192.0.0/10
+
+DNSPort 0.0.0.0:5353
+TransPort 0.0.0.0:9040
+SOCKSPort 0.0.0.0:9050
+
+SOCKSPolicy accept 192.168.0.0/16
+SOCKSPolicy accept 172.16.0.0/12
+SOCKSPolicy accept 10.0.0.0/8
+SOCKSPolicy accept 127.0.0.1/8
+SOCKSPolicy reject *
+
+# === Bridges and plugins ===
+UseBridges 1
+
+ClientTransportPlugin snowflake exec /usr/local/bin/snowflake-client
+ClientTransportPlugin webtunnel exec /usr/local/bin/webtunnel-client
+ClientTransportPlugin obfs4 exec /usr/local/bin/obfs4proxy
+
+# === Snowflake bridges ===
+Bridge snowflake 192.0.2.5:80 2B280B23E1107BB62ABFC40DDCC8824814F80A72 fingerprint=2B280B23E1107BB62ABFC40DDCC8824814F80A72 url=https://snowflake-broker.torproject.net/ ampcache=https://cdn.ampproject.org/ front=www.google.com ice=stun:stun.antisip.com:3478,stun:stun.epygi.com:3478,stun:stun.uls.co.za:3478,stun:stun.voipgate.com:3478,stun:stun.mixvoip.com:3478,stun:stun.nextcloud.com:3478,stun:stun.bethesda.net:3478,stun:stun.nextcloud.com:443 utls-imitate=hellorandomizedalpn
+Bridge snowflake 192.0.2.4:80 8838024498816A039FCBBAB14E6F40A0843051FA fingerprint=8838024498816A039FCBBAB14E6F40A0843051FA url=https://1098762253.rsc.cdn77.org fronts=cdn.zk.mk,img.icons8.com,cdn.kde.org ice=stun:stun.antisip.com:3478,stun:stun.epygi.com:3478,stun:stun.uls.co.za:3478,stun:stun.voipgate.com:3478,stun:stun.mixvoip.com:3478,stun:stun.nextcloud.com:3478,stun:stun.bethesda.net:3478,stun:stun.nextcloud.com:443 utls-imitate=hellorandomizedalpn
+Bridge snowflake 192.0.2.3:80 2B280B23E1107BB62ABFC40DDCC8824814F80A72 fingerprint=2B280B23E1107BB62ABFC40DDCC8824814F80A72 url=https://1098762253.rsc.cdn77.org fronts=cdn.zk.mk,img.icons8.com,cdn.kde.org ice=stun:stun.antisip.com:3478,stun:stun.epygi.com:3478,stun:stun.uls.co.za:3478,stun:stun.voipgate.com:3478,stun:stun.mixvoip.com:3478,stun:stun.nextcloud.com:3478,stun:stun.bethesda.net:3478,stun:stun.nextcloud.com:443 utls-imitate=hellorandomizedalpn
+Bridge snowflake 192.0.2.6:80 8838024498816A039FCBBAB14E6F40A0843051FA fingerprint=8838024498816A039FCBBAB14E6F40A0843051FA url=https://snowflake-broker.torproject.net/ ampcache=https://cdn.ampproject.org/ front=www.google.com ice=stun:stun.antisip.com:3478,stun:stun.epygi.com:3478,stun:stun.uls.co.za:3478,stun:stun.voipgate.com:3478,stun:stun.mixvoip.com:3478,stun:stun.nextcloud.com:3478,stun:stun.bethesda.net:3478,stun:stun.nextcloud.com:443 utls-imitate=hellorandomizedalpn
+
+# === WebTunnel bridges ===
+Bridge webtunnel [2001:db8:d0f2:6cd4:8630:8185:18d2:a5c]:443 5A94C0CDB0ED58681BDAA8FDBC53F5C9E32058F8 url=https://beefstrognoff.com/xRiEjTMRdkc9l7vrlASBmOus ver=0.0.4
+Bridge webtunnel [2001:db8:9de4:c800:cc50:4c26:b192:b006]:443 1F5CA44230E96911836158A474E2AEB16EAEA57C url=https://ghosttown.dev/MTwam63OSHyUPQPcRRw8hx50 ver=0.0.4
+Bridge webtunnel [2001:db8:9aec:17d4:7f1d:9583:2d3f:f007]:443 65A498C6166E7C0201A16841F33A7A7A300AD391 url=http://45.77.33.28/c5f89c09483ef1b1f741db9f1a34bd9d ver=0.0.3
+Bridge webtunnel [2001:db8:5d90:6cd2:fcac:ea1c:67b2:bee0]:443 D85733AB26E770DC4AB2ED44A0559504550D0925 url=https://qbxa1hay.xoomlia.com/k0tf6syz/ ver=0.0.3
+
+# === obfs4 bridges ===
+Bridge obfs4 144.31.85.112:46523 36C19076489A222548E98A7AD377178915A0A444 cert=JuXoHT8ih1u5v4QkqeeKgA71g3J7EEgJtyPLYRbdDoIMxSG5NxN1QlWxBR0VnF6jgGRHCw iat-mode=0
+Bridge obfs4 174.21.132.239:2555 8B79C2851804352C90B7A1FD480B000993B1C5BF cert=/LBksEYyp06VtfD+2evUBWwt+YK6W4JUERNdp0FFCidHUG/Djl+MZUaeuNCtgrjDe6lpAA iat-mode=0
+Bridge obfs4 54.38.139.126:52523 720999C7216765A06CCA614E772667FEA23EDACF cert=8FmX2qZK1B/xabIPtCD5rUVL6T7NyYDzr8AkUHIawhd/KRuxm5tGVvWwIq6WEG45LgOUHw iat-mode=0
+Bridge obfs4 138.199.220.200:22884 B5ECD5289F4F663B9A4C468D36CCFFD312FE77CD cert=xpoNaNFgDPxfa3SKpVrrNp7fSJiTVmzrwLZhIAN8KD/b1O8EL8w3qO5+Msjo9y5AxI3iSA iat-mode=0
+Bridge obfs4 89.169.37.109:8080 11DE1097D654DD21EE8ACFB42CE3FD786FEC33E4 cert=nrhDYvvCf7LrfRa9vYyExi0ng295ES8VQMD7eOCambH8Qp5JiHOY74lGiGrXp03kWxorDA iat-mode=0
+Bridge obfs4 62.246.40.115:1677 3234D58257F100D6B5D8AB6F43176E6946EFD513 cert=NU4FsdOIh8kfQQmERKbBVHOL+ZT3uOQ6Z2/ktB4b8gbXRrwVBo573cs6zL7gpIRWPG/QEA iat-mode=0
+Bridge obfs4 161.97.78.154:8443 62E274B90E39B3A23B64E5157140DC59E6E009EB cert=Xu8QpQ71B+Vofi3SYycLWbPn5OpHMoPrha+9obLp9QCrXii7BxIcfBVo6LRi7z+Q4YGwGA iat-mode=0
+Bridge obfs4 51.68.237.122:30839 708208F4631469FB59B8957AD3D01F8E3B6FEF7A cert=kDJk2ux6zItpRvs9ugTQqWl1W8pc8vO3PiiRFZ7kcHFghRUphK/2uq4xCnbS7bjBx3VcTw iat-mode=0

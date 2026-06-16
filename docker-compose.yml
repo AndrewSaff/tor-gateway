@@ -1,0 +1,37 @@
+services:
+  tor-gateway:
+    build:
+      context: .
+      
+    container_name: tor-gateway
+    restart: unless-stopped
+    
+    # Docker only. RouterOS/MikroTik Container may not support these options.
+    # Remove them when deploying on MikroTik.
+    mem_limit: 256m
+    cpus: 1.0
+    pids_limit: 100
+    
+    ports:
+      # SECURITY: This service is LAN-only by design. Never expose 5353/9040/9050/8118 to WAN.
+      # DNS
+      - "5353:5353/tcp"
+      - "5353:5353/udp"
+      # Transparent Proxy (TransPort)
+      - "9040:9040/tcp"
+      # SOCKS5 Proxy
+      - "9050:9050/tcp"
+      # HTTP Proxy (Privoxy)
+      - "8118:8118/tcp"
+    
+    volumes:
+      # Preserve Tor cache and state across restarts
+      - ./tor-data:/var/lib/tor
+      # - ./custom-torrc:/etc/tor/torrc:ro
+      # - ./custom-privoxy:/etc/privoxy/config:ro
+    
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
