@@ -1,6 +1,7 @@
 services:
   tor-gateway:
-    image: 565795/tor-gateway:latest
+    build:
+      context: .
       
     container_name: tor-gateway
     restart: unless-stopped

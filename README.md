@@ -31,6 +31,7 @@ tor-gateway/
 │       └── privoxy/config
 ├── Dockerfile
 ├── docker-compose.yml
+├── docker-compose.dev.yml
 └── README.md
 ```
 
@@ -48,6 +49,12 @@ tor-gateway/
 git clone https://github.com/AndrewSaff/tor-gateway.git
 cd tor-gateway
 docker compose up -d
+```
+**Development (build locally from Dockerfile):**
+```bash
+git clone https://github.com/AndrewSaff/tor-gateway.git
+cd tor-gateway
+docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build
 ```
 
 ### ⚠️ Security Notice (LAN/WAN)

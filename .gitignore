@@ -1,6 +1,7 @@
 tor-data/
 custom-torrc
 custom-privoxy
+dev-notes.local.txt
 
 # OS
 .DS_Store
